@@ -49,7 +49,7 @@ function Banner({ text, type }) {
 }
 
 export default function ApiTester() {
-  const [apiBase, setApiBase] = useState("http://localhost:5000/api");
+  const [apiBase, setApiBase] = useState("https://dept-social-api.onrender.com/api");
   const [user, setUser] = useState(null);
   const [error, setError] = useState("");
   const [notice, setNotice] = useState("");
