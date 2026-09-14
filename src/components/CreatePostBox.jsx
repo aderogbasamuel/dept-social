@@ -24,7 +24,7 @@ export default function CreatePostBox({ onPostCreated, onError }) {
   return (
     <div className="bg-white rounded-2xl p-4 shadow-sm shadow-emerald-900/5">
       <div className="flex items-center gap-3 mb-3">
-        <Avatar name={user?.username} size={10} />
+        <Avatar name={user?.username} avatarUrl={user?.avatarUrl} size={10} />
         <input
           placeholder="What's on your mind?"
           value={text}

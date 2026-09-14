@@ -3,7 +3,7 @@ import { useAuth } from "../context/AuthContext";
 import Avatar from "./Avatar"
 export default function Header() {
   const { user } = useAuth();
-
+console.log(user)
   return (
     <div className="flex items-center justify-between w-full">
       <div>
@@ -23,7 +23,7 @@ export default function Header() {
           <Bell size={17} className="text-gray-500" />
           <span className="absolute top-2 right-2 w-2 h-2 bg-emerald-500 rounded-full" />
         </button>
-        <Avatar name={user?.username} size={10} />
+        <Avatar name={user?.username} avatarUrl={user?.avatarUrl} size={10} />
       </div>
     </div>
   );

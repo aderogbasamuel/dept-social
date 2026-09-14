@@ -6,11 +6,11 @@ const COLORS = [
   "bg-cyan-600",
 ];
 
-// Picks a consistent color for the same name every time
 function colorForName(name = "") {
   const code = name.charCodeAt(0) || 0;
   return COLORS[code % COLORS.length];
 }
+
 const sizes = {
   6: "w-6 h-6",
   8: "w-8 h-8",
@@ -20,8 +20,18 @@ const sizes = {
   16: "w-16 h-16",
 };
 
-export default function Avatar({ name, size = 10 }) {
+export default function Avatar({ name, avatarUrl, size = 10 }) {
   const initial = name?.trim()?.[0]?.toUpperCase() || "?";
+
+  if (avatarUrl) {
+    return (
+      <img
+        src={avatarUrl}
+        alt={name}
+        className={`${sizes[size]} rounded-full object-cover shrink-0`}
+      />
+    );
+  }
 
   return (
     <div

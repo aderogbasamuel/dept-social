@@ -6,7 +6,10 @@ const AuthContext = createContext(null);
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [regUserId, setRegUserId] = useState("");
-
+const updateUser = (updatedFields) => {
+  setUser((prev) => ({ ...prev, ...updatedFields }));
+};
+ 
   const register = async ({ name, email, password, department }) => {
     const data = await request(ENDPOINTS.register(API_BASE), {
       method: "POST",
@@ -48,7 +51,7 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ user, regUserId, register, verify, login, logout }}
+      value={{ user, regUserId, register, verify, login, logout, updateUser }}
     >
       {children}
     </AuthContext.Provider>
