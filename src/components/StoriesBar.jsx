@@ -90,7 +90,7 @@ export default function StoriesBar({ onError }) {
             className="flex flex-col items-center gap-1.5 shrink-0"
           >
             <div className="w-14 h-14 rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 p-[2px]">
-              <div className="w-full h-full rounded-full bg-white p-[2px] border">
+              <div className="w-full h-full rounded-full bg-white p-[2px]">
                 <Avatar name={s.author?.username} size={12} />
               </div>
             </div>
