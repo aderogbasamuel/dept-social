@@ -64,7 +64,7 @@ export default function PostCard({ post, onChanged, onError }) {
   };
 
   return (
-    <article className="flex gap-3 px-4 py-3 border-b border-gray-100 hover:bg-gray-50/60 transition-colors shadow-sm shadow-emerald-900/5 dark:shadow-none dark:border dark:border-gray-800">
+    <article className="flex gap-3 px-4 py-3 border-b border-gray-100 hover:bg-gray-50/60 transition-colors shadow-sm shadow-emerald-900/5 dark:shadow-none dark:border-b pt-4 dark:border-gray-800">
       <Avatar name={post.author?.username} size={10} avatarUrl={post.author?.avatarUrl}/>
 
       <div className="flex-1 min-w-0">

@@ -66,14 +66,14 @@ export default function CreatePostBox({ onPostCreated, onError }) {
   };
 
   return (
-    <div className="p-4 border-2 border-gray-900/80 border-b-4 px-3 mx-2 bg-white rounded-2xl shadow-sm shadow-emerald-900/5 mt-2 dark:bg-gray-900 dark:border-gray-800 dark:shadow-none">
+    <div className="p-4 border border-gray-100/80 px-3 mx-2 bg-white rounded-2xl shadow-sm shadow-emerald-900/5 mt-2 dark:bg-gray-900 dark:border-gray-800 dark:shadow-none">
       <div className="flex items-center gap-3 mb-3">
         <Avatar name={user?.username} avatarUrl={user?.avatarUrl} size={10} />
         <input
           placeholder="What's on your mind?"
           value={text}
           onChange={(e) => setText(e.target.value)}
-          className="flex-1 bg-emerald-50/60 rounded-full px-4 py-2.5 text-sm outline-none placeholder:text-gray-400 dark:bg-gray-800 dark:placeholder:text-gray-500"
+          className="flex-1 bg-emerald-600/10 rounded-full px-4 py-2.5 text-sm outline-none placeholder:text-gray-600 dark:bg-gray-800 dark:placeholder:text-gray-500"
         />
       </div>
 

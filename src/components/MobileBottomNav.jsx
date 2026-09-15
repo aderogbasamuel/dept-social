@@ -1,4 +1,4 @@
-import { Home, Plus, User, Settings } from "lucide-react";
+import { Home, Plus, User, Settings, Users } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 
 function NavLink({ icon: Icon, label, path, active }) {
@@ -44,6 +44,12 @@ export default function MobileBottomNav() {
           label="Home"
           path="/dashboard"
           active={isDashboard}
+        />
+        <NavLink
+          icon={Users}
+          label="Groups"
+          path="/Groups"
+          active={location.pathname === "/Groups"}
         />
         <button
           type="button"
