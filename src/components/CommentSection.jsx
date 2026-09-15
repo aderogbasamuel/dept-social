@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { API_BASE, ENDPOINTS, request } from "../api/client";
+import { toast } from "sonner";
 
 export default function CommentSection({ postId, onError }) {
   const [comments, setComments] = useState([]);
@@ -27,6 +28,7 @@ export default function CommentSection({ postId, onError }) {
         body: JSON.stringify({ postId, content: newComment }),
       });
       setNewComment("");
+      toast.success("Comment added");
       fetchComments();
     } catch (err) {
       onError?.(err.message);

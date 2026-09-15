@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import Sidebar from "../components/Sidebar";
 import ProfileSettings from "../components/ProfileSettings";
+import MobileBottomNav from "../components/MobileBottomNav";
 
 export default function ProfilePage() {
   const { logout } = useAuth();
@@ -13,7 +14,7 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="min-h-screen bg-emerald-50/40 text-gray-800">
+    <div className="min-h-screen bg-emerald-50/40 pb-20 text-gray-800 lg:pb-0">
       <div className="max-w-[1200px] mx-auto flex gap-6 p-6">
         <Sidebar />
 
@@ -33,6 +34,7 @@ export default function ProfilePage() {
           <ProfileSettings />
         </main>
       </div>
+      <MobileBottomNav />
     </div>
   );
 }

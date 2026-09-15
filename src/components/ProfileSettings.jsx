@@ -3,8 +3,8 @@ import { Camera } from "lucide-react";
 import { API_BASE, request } from "../api/client";
 import { useAuth } from "../context/AuthContext";
 import Avatar from "./Avatar";
-import Banner from "./Banner";
 import imageCompression from "browser-image-compression";
+import { toast } from "sonner";
 // Separate from the shared `request()` helper since file uploads need
 // multipart/form-data, not JSON — the browser sets its own boundary header,
 // so we must NOT set Content-Type manually here.
@@ -29,8 +29,6 @@ export default function ProfileSettings() {
   const [username, setUsername] = useState(user?.username || "");
   const [file, setFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(user?.avatarUrl || "");
-  const [error, setError] = useState("");
-  const [notice, setNotice] = useState("");
   const [saving, setSaving] = useState(false);
 
 
@@ -48,6 +46,7 @@ const handleFileChange = async (e) => {
     setPreviewUrl(URL.createObjectURL(compressed));
   } catch (err) {
     console.error("Compression failed, using original file:", err);
+    toast.info("Could not optimize the image; the original will be uploaded.");
     setFile(selected);
     setPreviewUrl(URL.createObjectURL(selected));
   }
@@ -55,22 +54,24 @@ const handleFileChange = async (e) => {
 
 
   const handleSaveUsername = async () => {
-    setError("");
-    setNotice("");
     if (!username.trim()) {
-      setError("Username cannot be empty");
+      toast.error("Username cannot be empty");
       return;
     }
     setSaving(true);
     try {
-      const data = await request(`${API_BASE}/users/username`, {
+      const usernameRequest = request(`${API_BASE}/users/username`, {
         method: "PATCH",
         body: JSON.stringify({ username }),
       });
+      const data = await toast.promise(usernameRequest, {
+        loading: "Saving username...",
+        success: "Username updated",
+        error: (err) => err.message,
+      });
       updateUser?.(data.user);
-      setNotice("Username updated");
-    } catch (err) {
-      setError(err.message);
+    } catch {
+      return;
     } finally {
       setSaving(false);
     }
@@ -78,17 +79,19 @@ const handleFileChange = async (e) => {
 
   const handleUploadAvatar = async () => {
     if (!file) return;
-    setError("");
-    setNotice("");
     setSaving(true);
     try {
       const formData = new FormData();
       formData.append("avatar", file);
-      const data = await uploadRequest(`${API_BASE}/users/avatar`, formData);
+      const avatarRequest = uploadRequest(`${API_BASE}/users/avatar`, formData);
+      const data = await toast.promise(avatarRequest, {
+        loading: "Uploading avatar...",
+        success: "Avatar updated",
+        error: (err) => err.message,
+      });
       updateUser?.(data.user);
-      setNotice("Avatar updated");
-    } catch (err) {
-      setError(err.message);
+    } catch {
+      return;
     } finally {
       setSaving(false);
     }
@@ -99,9 +102,6 @@ const handleFileChange = async (e) => {
       <h2 className="text-sm font-semibold text-gray-800 mb-4">
         Profile settings
       </h2>
-
-      <Banner text={error} type="error" />
-      <Banner text={notice} />
 
       {/* Avatar */}
       <div className="flex items-center gap-4 mb-5">

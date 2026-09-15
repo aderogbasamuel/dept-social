@@ -2,25 +2,25 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { API_BASE, ENDPOINTS, request } from "../api/client";
 import { useAuth } from "../context/AuthContext";
+import { toast } from "sonner";
 import Sidebar from "../components/Sidebar";
 import RightSidebar from "../components/RightSidebar";
 import Header from "../components/Header";
 import CreatePostBox from "../components/CreatePostBox";
 import PostCard from "../components/PostCard";
-import Banner from "../components/Banner";
 import StoriesBar from "../components/StoriesBar";
+import MobileBottomNav from "../components/MobileBottomNav";
 export default function DashboardPage() {
   const { logout } = useAuth();
   const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
-  const [error, setError] = useState("");
 
   const fetchPosts = async () => {
     try {
       const data = await request(ENDPOINTS.posts(API_BASE));
       setPosts(data.posts || data || []);
     } catch (err) {
-      setError(err.message);
+      toast.error(err.message);
     }
   };
 
@@ -34,24 +34,23 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="min-h-screen bg-emerald-50/40 text-gray-800">
-      <div className="max-w-[1200px] mx-auto flex gap-6 p-6">
+    <div className="min-h-screen bg-white pb-20 text-gray-800 lg:pb-0">
+      <div className="max-w-[1200px] mx-auto flex gap-6 sm:p-6">
         <Sidebar />
 
-        <main className="flex-1 min-w-0 flex flex-col gap-5">
+        <main className="flex-1 min-w-0 flex flex-col">
           <div className="flex items-center justify-between">
             <Header />
           </div>
           <button
             onClick={handleLogout}
-            className="self-end text-xs text-gray-400 -mt-3"
+            className="self-end text-xs text-red-400 px-6 mt-2"
           >
             Log out
           </button>
 
-          <Banner text={error} type="error" />
-          <StoriesBar onError={setError} />
-          <CreatePostBox onPostCreated={fetchPosts} onError={setError} />
+          <CreatePostBox onPostCreated={fetchPosts} />
+          <StoriesBar onError={toast.error} />
 
           {posts.length === 0 && (
             <p className="text-sm text-gray-400 text-center py-6">
@@ -64,13 +63,14 @@ export default function DashboardPage() {
               key={post._id || post.id}
               post={post}
               onChanged={fetchPosts}
-              onError={setError}
+              onError={toast.error}
             />
           ))}
         </main>
 
         <RightSidebar />
       </div>
+      <MobileBottomNav />
     </div>
   );
 }

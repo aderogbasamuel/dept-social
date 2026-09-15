@@ -2,29 +2,31 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import AuthCard from "../components/AuthCard";
-import Banner from "../components/Banner";
+import { toast } from "sonner";
 
 export default function LoginPage() {
   const { login } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
     try {
-      await login({ email, password });
+      const loginRequest = login({ email, password });
+      await toast.promise(loginRequest, {
+        loading: "Logging in...",
+        success: "Welcome back",
+        error: (err) => err.message,
+      });
       navigate("/dashboard");
-    } catch (err) {
-      setError(err.message);
+    } catch {
+      return;
     }
   };
 
   return (
     <AuthCard title="Welcome back" subtitle="Log in to your department feed">
-      <Banner text={error} type="error" />
       <form onSubmit={handleSubmit} className="space-y-3">
         <input
           className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"

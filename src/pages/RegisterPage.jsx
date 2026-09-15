@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import AuthCard from "../components/AuthCard";
-import Banner from "../components/Banner";
+import { toast } from "sonner";
 
 export default function RegisterPage() {
   const { register } = useAuth();
@@ -13,29 +13,28 @@ export default function RegisterPage() {
     password: "",
     department: "",
   });
-  const [error, setError] = useState("");
-  const [notice, setNotice] = useState("");
 
   const handleField = (key) => (e) =>
     setForm((f) => ({ ...f, [key]: e.target.value }));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    setNotice("");
     try {
-      const data = await register(form);
-      setNotice(data?.message || "Registered. Check for a verification code.");
+      const registerRequest = register(form);
+      await toast.promise(registerRequest, {
+        loading: "Creating your account...",
+        success: (data) =>
+          data?.message || "Registered. Check for a verification code.",
+        error: (err) => err.message,
+      });
       navigate("/verify");
-    } catch (err) {
-      setError(err.message);
+    } catch {
+      return;
     }
   };
 
   return (
     <AuthCard title="Create account" subtitle="Sign up with your school email">
-      <Banner text={error} type="error" />
-      <Banner text={notice} />
       <form onSubmit={handleSubmit} className="space-y-3">
         <input
           className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"

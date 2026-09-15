@@ -2,26 +2,26 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import AuthCard from "../components/AuthCard";
-import Banner from "../components/Banner";
+import { toast } from "sonner";
 
 export default function VerifyPage() {
   const { verify, regUserId } = useAuth();
   const navigate = useNavigate();
   const [userId, setUserId] = useState(regUserId || "");
   const [code, setCode] = useState("");
-  const [error, setError] = useState("");
-  const [notice, setNotice] = useState("");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError("");
-    setNotice("");
     try {
-      const data = await verify({ userId, code });
-      setNotice(data?.message || "Verified. You can log in now.");
+      const verifyRequest = verify({ userId, code });
+      await toast.promise(verifyRequest, {
+        loading: "Verifying your email...",
+        success: (data) => data?.message || "Verified. You can log in now.",
+        error: (err) => err.message,
+      });
       setTimeout(() => navigate("/login"), 1200);
-    } catch (err) {
-      setError(err.message);
+    } catch {
+      return;
     }
   };
 
@@ -30,8 +30,6 @@ export default function VerifyPage() {
       title="Verify your email"
       subtitle="Enter the code we sent to your school email"
     >
-      <Banner text={error} type="error" />
-      <Banner text={notice} />
       <form onSubmit={handleSubmit} className="space-y-3">
         <input
           className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm"

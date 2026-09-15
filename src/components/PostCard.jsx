@@ -9,6 +9,7 @@ import {
 import { API_BASE, ENDPOINTS, request } from "../api/client";
 import Avatar from "./Avatar";
 import CommentSection from "./CommentSection";
+import { toast } from "sonner";
 
 function timeAgo(dateString) {
   const seconds = Math.floor((Date.now() - new Date(dateString)) / 1000);
@@ -34,6 +35,7 @@ export default function PostCard({ post, onChanged, onError }) {
     try {
       await request(ENDPOINTS.likePost(API_BASE, id), { method: "POST" });
       setLiked((l) => !l);
+      toast.success(liked ? "Like removed" : "Post liked");
       onChanged?.();
     } catch (err) {
       onError?.(err.message);
@@ -44,6 +46,7 @@ export default function PostCard({ post, onChanged, onError }) {
     setMenuOpen(false);
     try {
       await request(ENDPOINTS.post(API_BASE, id), { method: "DELETE" });
+      toast.success("Post deleted");
       onChanged?.();
     } catch (err) {
       onError?.(err.message);
@@ -57,6 +60,7 @@ export default function PostCard({ post, onChanged, onError }) {
         body: JSON.stringify({ text: editText }),
       });
       setIsEditing(false);
+      toast.success("Post updated");
       onChanged?.();
     } catch (err) {
       onError?.(err.message);
@@ -64,7 +68,7 @@ export default function PostCard({ post, onChanged, onError }) {
   };
 
   return (
-    <article className="flex gap-3 px-4 py-3 border-b border-gray-100 hover:bg-gray-50/60 transition-colors">
+    <article className="flex gap-3 py-1 pt-6 border-b-2 border-gray-100 hover:bg-gray-50/60 transition-colors px-3">
       <Avatar name={post.author?.username} avatarUrl={post.author?.avatarUrl} size={10} />
 
       <div className="flex-1 min-w-0">

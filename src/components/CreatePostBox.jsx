@@ -3,26 +3,32 @@ import { Image as ImageIcon, BarChart2, Smile } from "lucide-react";
 import { API_BASE, ENDPOINTS, request } from "../api/client";
 import Avatar from "./Avatar";
 import { useAuth } from "../context/AuthContext";
-export default function CreatePostBox({ onPostCreated, onError }) {
+import { toast } from "sonner";
+export default function CreatePostBox({ onPostCreated }) {
   const { user } = useAuth();
   const [text, setText] = useState("");
 
   const handleSubmit = async () => {
     if (!text.trim()) return;
     try {
-      await request(ENDPOINTS.posts(API_BASE), {
+      const postRequest = request(ENDPOINTS.posts(API_BASE), {
         method: "POST",
         body: JSON.stringify({ text }),
       });
+      await toast.promise(postRequest, {
+        loading: "Publishing post...",
+        success: "Post published",
+        error: (err) => err.message,
+      });
       setText("");
       onPostCreated?.();
-    } catch (err) {
-      onError?.(err.message);
+    } catch {
+      return;
     }
   };
 
   return (
-    <div className="bg-white rounded-2xl p-4 shadow-sm shadow-emerald-900/5">
+    <div id="create-post" className="p-4 border-b border-gray-100 px-3 -mt-1">
       <div className="flex items-center gap-3 mb-3">
         <Avatar name={user?.username} avatarUrl={user?.avatarUrl} size={10} />
         <input
@@ -30,7 +36,7 @@ export default function CreatePostBox({ onPostCreated, onError }) {
           value={text}
           onChange={(e) => setText(e.target.value)}
           onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
-          className="flex-1 bg-emerald-50/60 rounded-full px-4 py-2.5 text-sm outline-none placeholder:text-gray-400"
+          className="flex-1 bg-emerald-900/5 rounded-full px-4 py-2.5 text-sm outline-none placeholder:text-gray-600"
         />
       </div>
       <div className="flex items-center gap-5 pl-1 text-sm text-gray-500">
@@ -45,7 +51,7 @@ export default function CreatePostBox({ onPostCreated, onError }) {
         </button>
         <button
           onClick={handleSubmit}
-          className="ml-auto bg-emerald-600 text-white text-xs font-medium rounded-full px-4 py-1.5"
+          className="ml-auto bg-emerald-600 text-white text-sm font-medium rounded-full px-6 py-1.5"
         >
           Post
         </button>
