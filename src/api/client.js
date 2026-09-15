@@ -23,6 +23,10 @@ export const ENDPOINTS = {
   statuses: (base) => `${base}/statuses`,
   status: (base, id) => `${base}/statuses/${id}`,
   likeStatus: (base, id) => `${base}/statuses/${id}/like`,
+
+  userProfile: (base, id) => `${base}/users/${id}`,
+toggleFollow: (base, id) => `${base}/users/${id}/follow`,
+userPosts: (base, id) => `${base}/posts/user/${id}`,
 };
 
 export async function request(url, options = {}) {
