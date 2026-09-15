@@ -98,8 +98,8 @@ const handleFileChange = async (e) => {
   };
 
   return (
-    <div className="bg-white rounded-2xl p-5 shadow-sm shadow-emerald-900/5 max-w-sm">
-      <h2 className="text-sm font-semibold text-gray-800 mb-4">
+    <div className="bg-white dark:bg-gray-900 rounded-2xl p-5 shadow-sm shadow-emerald-900/5 dark:shadow-none dark:border dark:border-gray-800">
+      <h2 className="text-sm font-medium text-gray-800 dark:text-gray-100 mb-4">
         Profile settings
       </h2>
 

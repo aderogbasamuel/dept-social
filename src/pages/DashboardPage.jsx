@@ -34,7 +34,7 @@ export default function DashboardPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white pb-20 text-gray-800 lg:pb-0">
+    <div className="min-h-screen bg-white pb-20 text-gray-800 lg:pb-0 dark:bg-gray-950">
       <div className="max-w-[1200px] mx-auto flex gap-6 sm:p-6">
         <Sidebar />
 

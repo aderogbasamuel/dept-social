@@ -4,7 +4,18 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>api-tester</title>
+    <title>Dept Social</title>
+    <script>
+      // Applied before React mounts, so there's no flash of the wrong
+      // theme while the app boots. Defaults to dark if nothing is saved.
+      (function () {
+        const saved = localStorage.getItem("theme");
+        const theme = saved || "dark";
+        if (theme === "dark") {
+          document.documentElement.classList.add("dark");
+        }
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>

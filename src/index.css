@@ -1,6 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap');
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 body {
   font-family: "Plus Jakarta Sans", sans-serif;
 }
+
+/* Tailwind v4 defaults dark: to the OS color-scheme preference.
+   This line switches it to a manual class-based toggle instead,
+   so our ThemeContext can control it directly. */
+
+

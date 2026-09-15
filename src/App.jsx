@@ -7,12 +7,14 @@ import VerifyPage from "./pages/VerifyPage";
 import DashboardPage from "./pages/DashboardPage";
 import ProfilePage from "./pages/ProfilePage";
 import { Toaster } from "sonner";
-
+import SettingsPage from "./pages/SettingsPage";
+import {ThemeProvider} from "./context/ThemeContext";
 export default function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
-        <Toaster
+      <ThemeProvider>
+        <BrowserRouter>
+          <Toaster
           position="top-right"
           toastOptions={{
             classNames: {
@@ -44,9 +46,18 @@ export default function App() {
               </ProtectedRoute>
             }
           />
+          <Route
+            path="/settings"
+            element={
+              <ProtectedRoute>
+                <SettingsPage />
+              </ProtectedRoute>
+            }
+          />
           <Route path="*" element={<Navigate to="/login" replace />} />
         </Routes>
       </BrowserRouter>
+      </ThemeProvider>
     </AuthProvider>
   );
 }

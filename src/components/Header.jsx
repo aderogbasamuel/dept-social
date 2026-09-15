@@ -7,10 +7,10 @@ console.log(user)
   return (
     <div className="flex items-center justify-between w-full border-gray-200 border-b-2 pb-4 px-4 sm:px-6 pt-6">
       <div className="mt-2">
-        <h1 className="text-lg sm:text-2xl font-semibold text-emerald-950 text-nowrap">
+        <h1 className="text-lg sm:text-2xl font-semibold text-emerald-950 text-nowrap dark:text-gray-100">
           Hey, {user?.username || "there"} 👋
         </h1>
-        <p className="text-sm text-gray-500">
+        <p className="text-sm text-gray-500 dark:text-gray-400">
           let's see what's new today
         </p>
       </div>

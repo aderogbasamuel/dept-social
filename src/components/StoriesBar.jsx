@@ -176,7 +176,7 @@ export default function StoriesBar({ onError }) {
     <>
       {/* ================= STORIES BAR ================= */}
 
-      <div className="border-gray-100 border-b bg-emerald-500/5 pb-4 flex items-center gap-4 overflow-x-auto px-4 pt-4">
+      <div className="border-gray-100 border-b  pb-4 flex items-center gap-4 overflow-x-auto px-4 pt-4 dark:border-gray-800 mt-2">
         {/* Your story */}
         <button
           onClick={() => setShowCreate(true)}
@@ -186,7 +186,7 @@ export default function StoriesBar({ onError }) {
             <Plus size={18} className="text-emerald-500" />
           </div>
 
-          <span className="text-xs text-gray-500">
+          <span className="text-xs text-gray-500 dark:text-gray-400">
             Your story
           </span>
         </button>

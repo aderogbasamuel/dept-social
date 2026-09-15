@@ -3,7 +3,7 @@ import { useAuth } from "../context/AuthContext";
 import Sidebar from "../components/Sidebar";
 import ProfileSettings from "../components/ProfileSettings";
 import MobileBottomNav from "../components/MobileBottomNav";
-
+import AppLayout from "../components/AppLayout";
 export default function ProfilePage() {
   const { logout } = useAuth();
   const navigate = useNavigate();
@@ -14,27 +14,14 @@ export default function ProfilePage() {
   };
 
   return (
-    <div className="min-h-screen bg-emerald-50/40 pb-20 text-gray-800 lg:pb-0">
-      <div className="max-w-[1200px] mx-auto flex gap-6 p-6">
-        <Sidebar />
-
-        <main className="flex-1 min-w-0 flex flex-col gap-5">
-          <div className="flex items-center justify-between">
-            <h1 className="text-2xl font-semibold text-emerald-950">
-              Profile
-            </h1>
-            <button
-              onClick={handleLogout}
-              className="text-xs text-gray-400"
-            >
-              Log out
-            </button>
-          </div>
-
-          <ProfileSettings />
-        </main>
+    <AppLayout>
+      <div className="flex items-center justify-between">
+        <h1 className="text-2xl font-semibold text-emerald-950 dark:text-emerald-100">Profile</h1>
+        <button onClick={handleLogout} className="text-xs text-gray-400 dark:text-gray-500 px-6">
+          Log out
+        </button>
       </div>
-      <MobileBottomNav />
-    </div>
+      <ProfileSettings />
+    </AppLayout>
   );
 }
