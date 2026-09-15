@@ -6,7 +6,7 @@ import { toast } from "sonner";
 import { useAuth } from "../context/AuthContext";
 async function uploadRequest(url, formData) {
 
-  const { user } = useAuth();
+  
   const res = await fetch(url, {
     method: "POST",
     credentials: "include",
@@ -23,6 +23,7 @@ async function uploadRequest(url, formData) {
 }
 
 export default function CreatePostBox({ onPostCreated, onError }) {
+  const { user } = useAuth();
   const [text, setText] = useState("");
   const [file, setFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState("");
