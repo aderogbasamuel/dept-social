@@ -8,55 +8,66 @@ import DashboardPage from "./pages/DashboardPage";
 import ProfilePage from "./pages/ProfilePage";
 import { Toaster } from "sonner";
 import SettingsPage from "./pages/SettingsPage";
-import {ThemeProvider} from "./context/ThemeContext";
+import { ThemeProvider } from "./context/ThemeContext";
+import UserProfilePage from "./pages/UserProfilePage";
+
 export default function App() {
   return (
     <AuthProvider>
       <ThemeProvider>
         <BrowserRouter>
           <Toaster
-          position="top-right"
-          toastOptions={{
-            classNames: {
-              toast: "rounded-xl border border-emerald-100 shadow-lg",
-              title: "font-semibold text-gray-800",
-              description: "text-sm text-gray-500",
-              success: "border-emerald-200",
-              error: "border-red-200",
-            },
-          }}
-        />
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/verify" element={<VerifyPage />} />
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute>
-                <DashboardPage />
-              </ProtectedRoute>
-            }
+            position="top-right"
+            toastOptions={{
+              classNames: {
+                toast: "rounded-xl border border-emerald-100 shadow-lg",
+                title: "font-semibold text-gray-800",
+                description: "text-sm text-gray-500",
+                success: "border-emerald-200",
+                error: "border-red-200",
+              },
+            }}
           />
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRoute>
-                <ProfilePage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/settings"
-            element={
-              <ProtectedRoute>
-                <SettingsPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="*" element={<Navigate to="/login" replace />} />
-        </Routes>
-      </BrowserRouter>
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="/verify" element={<VerifyPage />} />
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <DashboardPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <ProfilePage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/settings"
+              element={
+                <ProtectedRoute>
+                  <SettingsPage />
+                </ProtectedRoute>
+              }
+            />
+
+            <Route
+              path="/users/:id"
+              element={
+                <ProtectedRoute>
+                  <UserProfilePage />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="*" element={<Navigate to="/login" replace />} />
+          </Routes>
+        </BrowserRouter>
       </ThemeProvider>
     </AuthProvider>
   );

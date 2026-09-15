@@ -9,6 +9,7 @@ import {
 import { API_BASE, ENDPOINTS, request } from "../api/client";
 import Avatar from "./Avatar";
 import CommentSection from "./CommentSection";
+import { useNavigate } from "react-router-dom";
 
 function timeAgo(dateString) {
   const seconds = Math.floor((Date.now() - new Date(dateString)) / 1000);
@@ -23,6 +24,7 @@ function timeAgo(dateString) {
 }
 
 export default function PostCard({ post, onChanged, onError }) {
+  const navigate = useNavigate();
   const id = post._id || post.id;
   const [showComments, setShowComments] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -64,16 +66,26 @@ export default function PostCard({ post, onChanged, onError }) {
   };
 
   return (
-    <article className="flex gap-3 px-4 py-3 border-b border-gray-100 hover:bg-gray-50/60 transition-colors shadow-sm shadow-emerald-900/5 dark:shadow-none dark:border-b pt-4 dark:border-gray-800">
-      <Avatar name={post.author?.username} size={10} avatarUrl={post.author?.avatarUrl}/>
-
+    <article className="flex gap-3 px-4 py-3 border-b border-gray-100 hover:bg-gray-50/60 dark:hover:bg-gray-600/10 transition-colors shadow-sm shadow-emerald-900/5 dark:shadow-none dark:border-b pt-4 dark:border-gray-800">
+      <button onClick={() => navigate(`/users/${post.author?._id}`)} className="h-fit shrink-0" >
+        <Avatar
+          name={post.author?.username}
+          avatarUrl={post.author?.avatarUrl}
+          size={10}
+        />
+      </button>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-1.5 text-sm">
-          <span className="font-semibold text-gray-900 truncate dark:text-gray-100">
+          <button
+            onClick={() => navigate(`/users/${post.author?._id}`)}
+            className="font-semibold text-gray-900 truncate dark:text-gray-100"
+          >
             {post.author?.username || "Unknown"}
-          </span>
+          </button>
           <span className="text-gray-400 dark:text-gray-300">·</span>
-          <span className="text-gray-400 dark:text-gray-300">{timeAgo(post.createdAt)}</span>
+          <span className="text-gray-400 dark:text-gray-300">
+            {timeAgo(post.createdAt)}
+          </span>
 
           <div className="relative ml-auto">
             <button
