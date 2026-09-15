@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { Image as ImageIcon, BarChart2, Smile, X } from "lucide-react";
 import { API_BASE } from "../api/client";
-
+import Avatar from "./Avatar";
+import { toast } from "sonner";
+import { useAuth } from "../context/AuthContext";
 async function uploadRequest(url, formData) {
+
+  const { user } = useAuth();
   const res = await fetch(url, {
     method: "POST",
     credentials: "include",
@@ -44,8 +48,12 @@ export default function CreatePostBox({ onPostCreated, onError }) {
       formData.append("text", text);
       if (file) formData.append("image", file);
 
-      await uploadRequest(`${API_BASE}/posts`, formData);
-
+      const postRequest = uploadRequest(`${API_BASE}/posts`, formData);
+      await toast.promise(postRequest, {
+        loading: "Publishing post...",
+        success: "Post published",
+        error: (err) => err.message,
+      });
       setText("");
       clearImage();
       onPostCreated?.();
@@ -57,9 +65,9 @@ export default function CreatePostBox({ onPostCreated, onError }) {
   };
 
   return (
-    <div className="bg-white rounded-2xl p-4 shadow-sm shadow-emerald-900/5">
+    <div className="p-4 border-b border-gray-100 px-3 -mt-1">
       <div className="flex items-center gap-3 mb-3">
-        <div className="w-10 h-10 rounded-full bg-emerald-200 shrink-0" />
+        <Avatar name={user?.username} avatarUrl={user?.avatarUrl} size={10} />
         <input
           placeholder="What's on your mind?"
           value={text}
