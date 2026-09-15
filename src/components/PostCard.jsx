@@ -9,7 +9,6 @@ import {
 import { API_BASE, ENDPOINTS, request } from "../api/client";
 import Avatar from "./Avatar";
 import CommentSection from "./CommentSection";
-import { toast } from "sonner";
 
 function timeAgo(dateString) {
   const seconds = Math.floor((Date.now() - new Date(dateString)) / 1000);
@@ -35,7 +34,6 @@ export default function PostCard({ post, onChanged, onError }) {
     try {
       await request(ENDPOINTS.likePost(API_BASE, id), { method: "POST" });
       setLiked((l) => !l);
-      toast.success(liked ? "Like removed" : "Post liked");
       onChanged?.();
     } catch (err) {
       onError?.(err.message);
@@ -46,7 +44,6 @@ export default function PostCard({ post, onChanged, onError }) {
     setMenuOpen(false);
     try {
       await request(ENDPOINTS.post(API_BASE, id), { method: "DELETE" });
-      toast.success("Post deleted");
       onChanged?.();
     } catch (err) {
       onError?.(err.message);
@@ -56,11 +53,10 @@ export default function PostCard({ post, onChanged, onError }) {
   const handleSaveEdit = async () => {
     try {
       await request(ENDPOINTS.post(API_BASE, id), {
-        method: "PATCH",
+        method: "PUT",
         body: JSON.stringify({ text: editText }),
       });
       setIsEditing(false);
-      toast.success("Post updated");
       onChanged?.();
     } catch (err) {
       onError?.(err.message);
@@ -68,8 +64,8 @@ export default function PostCard({ post, onChanged, onError }) {
   };
 
   return (
-    <article className="flex gap-3 py-1 pt-6 border-b-2 border-gray-100 hover:bg-gray-50/60 transition-colors px-3">
-      <Avatar name={post.author?.username} avatarUrl={post.author?.avatarUrl} size={10} />
+    <article className="flex gap-3 px-4 py-3 border-b border-gray-100 hover:bg-gray-50/60 transition-colors">
+      <Avatar name={post.author?.username} size={10} />
 
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-1.5 text-sm">
@@ -124,9 +120,21 @@ export default function PostCard({ post, onChanged, onError }) {
             </button>
           </div>
         ) : (
-          <p className="text-sm text-gray-800 mt-0.5 mb-2 leading-normal whitespace-pre-wrap">
-            {post.text}
-          </p>
+          <>
+            {post.text && (
+              <p className="text-sm text-gray-800 mt-0.5 mb-2 leading-normal whitespace-pre-wrap">
+                {post.text}
+              </p>
+            )}
+            {post.image && (
+              <img
+                src={post.image}
+                alt="post attachment"
+                className="rounded-xl max-h-96 w-full object-cover mb-2 border border-gray-100"
+                loading="lazy"
+              />
+            )}
+          </>
         )}
 
         <div className="flex items-center justify-between max-w-xs text-gray-500 -ml-2">
