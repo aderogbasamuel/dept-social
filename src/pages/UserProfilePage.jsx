@@ -1,11 +1,10 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { API_BASE, ENDPOINTS, request } from "../api/client";
-import Sidebar from "../components/Sidebar";
 import Avatar from "../components/Avatar";
 import PostCard from "../components/PostCard";
 import Banner from "../components/Banner";
-
+import AppLayout from "../components/AppLayout"
 export default function UserProfilePage() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -72,11 +71,7 @@ export default function UserProfilePage() {
     profile;
 
   return (
-    <div className="min-h-screen bg-emerald-50/40 text-gray-800">
-      <div className="max-w-[1200px] mx-auto flex gap-6 p-6">
-        <Sidebar />
-
-        <main className="flex-1 min-w-0 flex flex-col gap-5 max-w-2xl">
+  <AppLayout>
           <Banner text={error} type="error" />
 
           {/* Profile header */}
@@ -158,8 +153,6 @@ export default function UserProfilePage() {
               />
             ))}
           </div>
-        </main>
-      </div>
-    </div>
+       </AppLayout>
   );
 }
