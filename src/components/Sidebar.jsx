@@ -18,7 +18,7 @@ function NavItem({ icon: Icon, label, path, active }) {
       to={path}
       className={`w-full flex items-center gap-3 px-4 py-2.5 rounded-xl text-sm transition-colors ${
         active
-          ? "bg-emerald-600 text-white font-medium"
+          ? "bg-emerald-600 text-white font-medium dark:text-gray-"
           : "text-gray-600 hover:bg-emerald-50"
       }`}
     >
@@ -42,7 +42,7 @@ export default function Sidebar() {
         </span>
       </Link>
 
-      <nav className="flex flex-col gap-1 bg-white rounded-2xl p-3 shadow-sm shadow-emerald-900/5">
+      <nav className="flex flex-col gap-1 bg-white dark:bg-gray-900 rounded-2xl p-3 shadow-sm shadow-emerald-900/5">
         {nav.map((item) => (
           <NavItem
             key={item.label}

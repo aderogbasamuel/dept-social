@@ -55,7 +55,7 @@ export default function MobileBottomNav() {
           type="button"
           aria-label="Create post"
           onClick={handleCreatePost}
-          className="flex h-12 w-12 items-center justify-center rounded-full bg-emerald-600 text-white shadow-lg shadow-emerald-600/25 transition-transform scale-110 hover:scale-105 active:scale-95"
+          className="flex h-15 w-15 items-center justify-center rounded-full bg-emerald-600 text-white shadow-lg shadow-emerald-600/25 transition-transform scale-110 hover:scale-105 active:scale-95"
         >
           <Plus size={22} />
         </button>
