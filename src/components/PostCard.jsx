@@ -5,6 +5,7 @@ import {
   Repeat2,
   Share,
   MoreHorizontal,
+  Users,
 } from "lucide-react";
 import { API_BASE, ENDPOINTS, request } from "../api/client";
 import Avatar from "./Avatar";
@@ -67,7 +68,10 @@ export default function PostCard({ post, onChanged, onError }) {
 
   return (
     <article className="flex gap-3 px-4 py-3 border-b border-gray-100 hover:bg-gray-50/60 dark:hover:bg-gray-600/10 transition-colors shadow-sm shadow-emerald-900/5 dark:shadow-none dark:border-b pt-4 dark:border-gray-800">
-      <button onClick={() => navigate(`/users/${post.author?._id}`)} className="h-fit shrink-0" >
+      <button
+        onClick={() => navigate(`/users/${post.author?._id}`)}
+        className="h-fit shrink-0"
+      >
         <Avatar
           name={post.author?.username}
           avatarUrl={post.author?.avatarUrl}
@@ -83,9 +87,12 @@ export default function PostCard({ post, onChanged, onError }) {
             {post.author?.username || "Unknown"}
           </button>
           <span className="text-gray-400 dark:text-gray-300">·</span>
-          <span className="text-gray-400 dark:text-gray-300">
+          <button
+            onClick={() => navigate(`/posts/${id}`)}
+            className="text-gray-400 hover:underline"
+          >
             {timeAgo(post.createdAt)}
-          </span>
+          </button>
 
           <div className="relative ml-auto">
             <button
@@ -115,6 +122,16 @@ export default function PostCard({ post, onChanged, onError }) {
             )}
           </div>
         </div>
+
+        {post.group && (
+          <button
+            onClick={() => navigate(`/groups/${post.group._id}`)}
+            className="flex items-center gap-1 text-xs text-emerald-600 dark:text-emerald-400 hover:underline mb-1"
+          >
+            <Users size={11} />
+            posted in {post.group.name}
+          </button>
+        )}
 
         {isEditing ? (
           <div className="flex gap-2 mt-1 mb-2">

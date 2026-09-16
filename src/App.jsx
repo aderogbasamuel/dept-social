@@ -10,7 +10,8 @@ import { Toaster } from "sonner";
 import SettingsPage from "./pages/SettingsPage";
 import { ThemeProvider } from "./context/ThemeContext";
 import UserProfilePage from "./pages/UserProfilePage";
-
+import GroupsPage from "./pages/Groupsage";
+import PostDetailPage from "./pages/PostDetailPage";
 export default function App() {
   return (
     <AuthProvider>
@@ -41,6 +42,14 @@ export default function App() {
               }
             />
             <Route
+              path="/groups"
+              element={
+                <ProtectedRoute>
+                  <GroupsPage />
+                </ProtectedRoute>
+              }
+            />
+            <Route
               path="/profile"
               element={
                 <ProtectedRoute>
@@ -65,6 +74,14 @@ export default function App() {
                 </ProtectedRoute>
               }
             />
+            <Route
+  path="/posts/:id"
+  element={
+    <ProtectedRoute>
+      <PostDetailPage />
+    </ProtectedRoute>
+  }
+/>
             <Route path="*" element={<Navigate to="/login" replace />} />
           </Routes>
         </BrowserRouter>

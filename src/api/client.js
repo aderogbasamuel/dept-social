@@ -25,8 +25,20 @@ export const ENDPOINTS = {
   likeStatus: (base, id) => `${base}/statuses/${id}/like`,
 
   userProfile: (base, id) => `${base}/users/${id}`,
-toggleFollow: (base, id) => `${base}/users/${id}/follow`,
-userPosts: (base, id) => `${base}/posts/user/${id}`,
+  toggleFollow: (base, id) => `${base}/users/${id}/follow`,
+  userPosts: (base, id) => `${base}/posts/user/${id}`,
+
+  // Add these to the ENDPOINTS object in src/api/client.js:
+
+  groups: (base) => `${base}/groups`,
+  group: (base, id) => `${base}/groups/${id}`,
+  joinGroup: (base, id) => `${base}/groups/${id}/join`,
+  groupMembers: (base, id) => `${base}/groups/${id}/members`,
+
+  // Feed variants — the backend reads these as query params
+  groupFeed: (base, id) => `${base}/posts?group=${id}`,
+  mainFeed: (base) => `${base}/posts?scope=main`,
+  // (the plain `posts` endpoint you already have = the mixed home feed)
 };
 
 export async function request(url, options = {}) {

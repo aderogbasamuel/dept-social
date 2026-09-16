@@ -200,13 +200,14 @@ export default function StoriesBar({ onError }) {
           >
             <div
               className={`rounded-full bg-gradient-to-br from-emerald-400 to-teal-500 p-[2px] ${
-                stories.length > 1 ? "ring-2 ring-emerald-200" : ""
+                stories.length > 1 ? "ring-2 ring-emerald-200 dark:ring-gray-600" : ""
               }`}
             >
-              <div className=" rounded-full bg-white p-0.5">
+              <div className=" rounded-full bg-white dark:bg-gray-950 p-0.5">
                 <Avatar
                   name={latestStory.author?.username}
                   size={12}
+                  avatarUrl={latestStory.author?.avatarUrl}
                 />
               </div>
             </div>
