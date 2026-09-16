@@ -60,7 +60,7 @@ export default function UserProfilePage() {
   if (!profile) {
     return (
       <div className="min-h-screen bg-emerald-50/40 flex items-center justify-center">
-        <p className="text-sm text-gray-400">
+        <p className="text-sm text-gray-400 dark:text-gray-500">
           {error || "Loading profile..."}
         </p>
       </div>
@@ -75,7 +75,7 @@ export default function UserProfilePage() {
           <Banner text={error} type="error" />
 
           {/* Profile header */}
-          <div className="bg-white rounded-2xl p-6 shadow-sm shadow-emerald-900/5">
+          <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm shadow-emerald-900/5">
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center gap-4">
                 <Avatar
@@ -84,11 +84,11 @@ export default function UserProfilePage() {
                   size={16}
                 />
                 <div>
-                  <h1 className="text-lg font-semibold text-emerald-950">
+                  <h1 className="text-lg font-semibold text-emerald-950 dark:text-gray-100">
                     {user.username}
                   </h1>
                   {user.department && (
-                    <p className="text-sm text-gray-500">{user.department}</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-300">{user.department}</p>
                   )}
                 </div>
               </div>
@@ -96,7 +96,7 @@ export default function UserProfilePage() {
               {isOwnProfile ? (
                 <button
                   onClick={() => navigate("/profile")}
-                  className="text-sm border border-gray-300 rounded-lg px-4 py-1.5 text-gray-600"
+                  className="text-sm border border-gray-300 rounded-lg px-4 py-1.5 text-gray-600 dark:text-gray-400"
                 >
                   Edit profile
                 </button>
@@ -106,7 +106,7 @@ export default function UserProfilePage() {
                   disabled={followLoading}
                   className={`text-sm rounded-lg px-4 py-1.5 font-medium disabled:opacity-50 ${
                     isFollowing
-                      ? "border border-gray-300 text-gray-600"
+                      ? "border border-gray-300 text-gray-600 dark:text-gray-400"
                       : "bg-emerald-600 text-white"
                   }`}
                 >
@@ -115,21 +115,21 @@ export default function UserProfilePage() {
               )}
             </div>
 
-            <div className="flex items-center gap-5 text-sm text-gray-600">
+            <div className="flex items-center gap-5 text-sm text-gray-600 dark:text-gray-400">
               <span>
-                <span className="font-semibold text-gray-900">
+                <span className="font-semibold text-gray-900 dark:text-gray-100">
                   {postsCount}
                 </span>{" "}
                 posts
               </span>
               <span>
-                <span className="font-semibold text-gray-900">
+                <span className="font-semibold text-gray-900 dark:text-gray-100">
                   {followersCount}
                 </span>{" "}
                 followers
               </span>
               <span>
-                <span className="font-semibold text-gray-900">
+                <span className="font-semibold text-gray-900 dark:text-gray-100">
                   {followingCount}
                 </span>{" "}
                 following
@@ -138,9 +138,9 @@ export default function UserProfilePage() {
           </div>
 
           {/* Their posts */}
-          <div className="bg-white rounded-2xl shadow-sm shadow-emerald-900/5 overflow-hidden">
+          <div className=" overflow-hidden">
             {posts.length === 0 && (
-              <p className="text-sm text-gray-400 text-center py-8">
+              <p className="text-sm text-gray-400 dark:text-gray-500 text-center py-8">
                 No posts yet.
               </p>
             )}
