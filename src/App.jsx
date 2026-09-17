@@ -21,11 +21,11 @@ export default function App() {
             position="top-right"
             toastOptions={{
               classNames: {
-                toast: "rounded-xl border border-emerald-100 shadow-lg",
-                title: "font-semibold text-gray-800",
-                description: "text-sm text-gray-500",
-                success: "border-emerald-200",
-                error: "border-red-200",
+                toast: "rounded-xl border border-emerald-100 shadow-lg dark:border-gray-700 dark:bg-gray-800",
+                title: "font-semibold text-gray-800 dark:text-gray-100",
+                description: "text-sm text-gray-500 dark:text-gray-400",
+                success: "border-emerald-200 dark:border-emerald-300",
+                error: "border-red-200 dark:border-red-300",
               },
             }}
           />

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Heart,
   MessageCircle,
@@ -31,14 +31,24 @@ export default function PostCard({ post, onChanged, onError }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(post.text);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [liked, setLiked] = useState(false);
-
+  const [liked, setLiked] = useState(post.likedByMe || false);
+  const [likesCount, setLikesCount] = useState(post.likes?.length ?? 0);
+  useEffect(() => {
+    setLiked(post.likedByMe || false);
+    setLikesCount(post.likes?.length ?? 0);
+  }, [post.likedByMe, post.likes]);
   const handleLike = async () => {
+    const nextLiked = !liked;
+    setLiked(nextLiked);
+    setLikesCount((c) => c + (nextLiked ? 1 : -1));
+
     try {
       await request(ENDPOINTS.likePost(API_BASE, id), { method: "POST" });
-      setLiked((l) => !l);
       onChanged?.();
     } catch (err) {
+      
+      setLiked(!nextLiked);
+      setLikesCount((c) => c + (nextLiked ? -1 : 1));
       onError?.(err.message);
     }
   };
@@ -208,7 +218,7 @@ export default function PostCard({ post, onChanged, onError }) {
                 liked ? "text-pink-600" : "group-hover:text-pink-600"
               }`}
             >
-              {(post.likes?.length ?? 0) + (liked ? 1 : 0)}
+              {likesCount}
             </span>
           </button>
 
