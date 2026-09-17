@@ -3,8 +3,10 @@ import { useParams, useNavigate } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import { API_BASE, ENDPOINTS, request } from "../api/client";
 import Sidebar from "../components/Sidebar";
+import { toast } from "sonner";
 import PostCard from "../components/PostCard";
 import Banner from "../components/Banner";
+import AppLayout from "../components/AppLayout";
 
 export default function PostDetailPage() {
   const { id } = useParams();
@@ -35,11 +37,7 @@ export default function PostDetailPage() {
   }, [id]);
 
   return (
-    <div className="min-h-screen bg-emerald-50/40 dark:bg-gray-950 text-gray-800 dark:text-gray-100 transition-colors">
-      <div className="max-w-[1200px] mx-auto flex gap-6 p-6">
-        <Sidebar />
-
-        <main className="flex-1 min-w-0 flex flex-col gap-3 max-w-2xl">
+    <AppLayout>
           <button
             onClick={() => navigate(-1)}
             className="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400 mb-1 w-fit"
@@ -69,10 +67,9 @@ export default function PostDetailPage() {
                 onError={setError}
                 defaultShowComments
               />
+              <CommentSection postId={id} onError={toast.error} />
             </div>
           )}
-        </main>
-      </div>
-    </div>
+       </AppLayout>
   );
 }
