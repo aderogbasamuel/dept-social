@@ -5,6 +5,7 @@ import { API_BASE, ENDPOINTS, request } from "../api/client";
 import Sidebar from "../components/Sidebar";
 import Avatar from "../components/Avatar";
 import Banner from "../components/Banner";
+import AppLayout from "../components/AppLayout";
 
 export default function GroupsPage() {
   const navigate = useNavigate();
@@ -76,11 +77,7 @@ export default function GroupsPage() {
   };
 
   return (
-    <div className="min-h-screen bg-emerald-50/40 dark:bg-gray-950 text-gray-800 dark:text-gray-100 transition-colors">
-      <div className="max-w-[1200px] mx-auto flex gap-6 p-6">
-        <Sidebar />
-
-        <main className="flex-1 min-w-0 flex flex-col gap-5 max-w-2xl">
+    <AppLayout>
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-semibold text-emerald-950 dark:text-emerald-100">
@@ -119,7 +116,7 @@ export default function GroupsPage() {
                 <div
                   key={id}
                   onClick={() => navigate(`/groups/${id}`)}
-                  className="bg-white dark:bg-gray-900 dark:border dark:border-gray-800 rounded-2xl p-4 shadow-sm shadow-emerald-900/5 dark:shadow-none flex items-center gap-4 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-850 transition-colors"
+                  className="bg-white dark:bg-gray-900 dark:border dark:border-gray-800 rounded-2xl p-2 shadow-sm shadow-emerald-900/5 dark:shadow-none flex items-center gap-4 cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-850 transition-colors"
                 >
                   <Avatar name={g.name} avatarUrl={g.avatar} size={12} />
 
@@ -156,8 +153,6 @@ export default function GroupsPage() {
               );
             })}
           </div>
-        </main>
-      </div>
 
       {/* Create group modal */}
       {showCreate && (
@@ -217,6 +212,6 @@ export default function GroupsPage() {
           </div>
         </div>
       )}
-    </div>
+   </AppLayout>
   );
 }

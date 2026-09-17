@@ -6,6 +6,7 @@ import Sidebar from "../components/Sidebar";
 import Avatar from "../components/Avatar";
 import PostCard from "../components/PostCard";
 import Banner from "../components/Banner";
+import AppLayout from "../components/AppLayout";
 
 export default function GroupDetailPage() {
   const { id } = useParams();
@@ -98,15 +99,11 @@ export default function GroupDetailPage() {
   const { group, isMember, role } = data;
 
   return (
-    <div className="min-h-screen bg-emerald-50/40 dark:bg-gray-950 text-gray-800 dark:text-gray-100 transition-colors">
-      <div className="max-w-[1200px] mx-auto flex gap-6 p-6">
-        <Sidebar />
-
-        <main className="flex-1 min-w-0 flex flex-col gap-5 max-w-2xl">
+    <AppLayout>
           <Banner text={error} type="error" />
 
           {/* Group header */}
-          <div className="bg-white dark:bg-gray-900 dark:border dark:border-gray-800 rounded-2xl p-6 shadow-sm shadow-emerald-900/5 dark:shadow-none">
+          <div className="bg-white dark:bg-gray-900 dark:border dark:border-gray-800 rounded-2xl p-3 py-4 shadow-sm shadow-emerald-900/5 dark:shadow-none">
             <div className="flex items-start justify-between mb-4">
               <div className="flex items-center gap-4">
                 <Avatar name={group.name} avatarUrl={group.avatar} size={16} />
@@ -194,7 +191,7 @@ export default function GroupDetailPage() {
                 </p>
               )}
 
-              <div className="bg-white dark:bg-gray-900 dark:border dark:border-gray-800 rounded-2xl shadow-sm shadow-emerald-900/5 dark:shadow-none overflow-hidden">
+              <div className="  dark:shadow-none overflow-hidden">
                 {posts.length === 0 && (
                   <p className="text-sm text-gray-400 text-center py-8">
                     No posts in this group yet.
@@ -240,8 +237,6 @@ export default function GroupDetailPage() {
               ))}
             </div>
           )}
-        </main>
-      </div>
-    </div>
+        </AppLayout>
   );
 }
