@@ -11,6 +11,7 @@ import SettingsPage from "./pages/SettingsPage";
 import { ThemeProvider } from "./context/ThemeContext";
 import UserProfilePage from "./pages/UserProfilePage";
 import GroupsPage from "./pages/Groupsage";
+import GroupDetailPage from "./pages/GroupDetailPage"
 import PostDetailPage from "./pages/PostDetailPage";
 export default function App() {
   return (
@@ -46,6 +47,14 @@ export default function App() {
               element={
                 <ProtectedRoute>
                   <GroupsPage />
+                </ProtectedRoute>
+              }
+            />
+             <Route
+              path="/groups/:id"
+              element={
+                <ProtectedRoute>
+                  <GroupDetailPage />
                 </ProtectedRoute>
               }
             />
