@@ -7,7 +7,7 @@ export default function SettingsPage() {
 
   return (
     <AppLayout>
-          <h1 className="text-2xl font-semibold text-emerald-950 dark:text-emerald-100">
+          <h1 className="text-2xl font-semibold text-emerald-950 dark:text-emerald-100 -mt-3">
             Settings
           </h1>
 

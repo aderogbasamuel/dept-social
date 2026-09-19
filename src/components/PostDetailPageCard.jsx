@@ -27,14 +27,13 @@ function timeAgo(dateString) {
 export default function PostCard({ post, onChanged, onError }) {
   const navigate = useNavigate();
   const id = post._id || post.id;
-  const {user} = useAuth();
+  const {user} =useAuth()
   const [showComments, setShowComments] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(post.text);
   const [menuOpen, setMenuOpen] = useState(false);
   const [liked, setLiked] = useState(post.likedByMe || false);
   const [likesCount, setLikesCount] = useState(post.likes?.length ?? 0);
-
   useEffect(() => {
     setLiked(post.likedByMe || false);
     setLikesCount(post.likes?.length ?? 0);
@@ -76,8 +75,9 @@ export default function PostCard({ post, onChanged, onError }) {
       onError?.(err.message);
     }
   };
+
   return (
-    <article className="flex gap-3 px-4 py-3 border-b border-gray-100 hover:bg-gray-50/60 dark:hover:bg-gray-600/10 transition-colors shadow-sm shadow-emerald-900/5 dark:shadow-none dark:border-b pt-4 dark:border-gray-800">
+    <article className="flex gap-3 px-0 py-3 hover:bg-gray-50/60 dark:hover:bg-gray-600/10 transition-colors shadow-sm shadow-emerald-900/5 dark:shadow-none ">
       <button
         onClick={() => navigate(`/users/${post.author?._id}`)}
         className="h-fit shrink-0"
@@ -111,7 +111,7 @@ export default function PostCard({ post, onChanged, onError }) {
             >
               <MoreHorizontal size={16} />
             </button>
-            {menuOpen && post.author?._id === user._id && (
+            {menuOpen && post.author?._id === user.id && (
               <div className="absolute right-0 top-7 z-10 bg-white border border-gray-200 dark:border-gray-400 dark:bg-gray-800 rounded-lg shadow-md text-xs overflow-hidden w-28">
                 <button
                   onClick={() => {
@@ -230,11 +230,6 @@ export default function PostCard({ post, onChanged, onError }) {
           </button>
         </div>
 
-        {showComments && (
-          <div>
-            <CommentSection postId={id} onError={onError} />
-          </div>
-        )}
       </div>
     </article>
   );

@@ -4,7 +4,7 @@ import { API_BASE, ENDPOINTS, request } from "../api/client";
 import Avatar from "../components/Avatar";
 import PostCard from "../components/PostCard";
 import Banner from "../components/Banner";
-import AppLayout from "../components/AppLayout"
+import AppLayout from "../components/AppLayout";
 export default function UserProfilePage() {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -67,92 +67,96 @@ export default function UserProfilePage() {
     );
   }
 
-  const { user, postsCount, followersCount, followingCount, isFollowing, isOwnProfile } =
-    profile;
+  const {
+    user,
+    postsCount,
+    followersCount,
+    followingCount,
+    isFollowing,
+    isOwnProfile,
+  } = profile;
 
   return (
-  <AppLayout>
-          <Banner text={error} type="error" />
+    <AppLayout>
+      <Banner text={error} type="error" />
 
-          {/* Profile header */}
-          <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm shadow-emerald-900/5">
-            <div className="flex items-start justify-between mb-4">
-              <div className="flex items-center gap-4">
-                <Avatar
-                  name={user.username}
-                  avatarUrl={user.avatarUrl}
-                  size={16}
-                />
-                <div>
-                  <h1 className="text-lg font-semibold text-emerald-950 dark:text-gray-100">
-                    {user.username}
-                  </h1>
-                  {user.department && (
-                    <p className="text-sm text-gray-500 dark:text-gray-300">{user.department}</p>
-                  )}
-                </div>
-              </div>
-
-              {isOwnProfile ? (
-                <button
-                  onClick={() => navigate("/profile")}
-                  className="text-sm border border-gray-300 rounded-lg px-4 py-1.5 text-gray-600 dark:text-gray-400"
-                >
-                  Edit profile
-                </button>
-              ) : (
-                <button
-                  onClick={handleFollowToggle}
-                  disabled={followLoading}
-                  className={`text-sm rounded-lg px-4 py-1.5 font-medium disabled:opacity-50 ${
-                    isFollowing
-                      ? "border border-gray-300 text-gray-600 dark:text-gray-400"
-                      : "bg-emerald-600 text-white"
-                  }`}
-                >
-                  {isFollowing ? "Following" : "Follow"}
-                </button>
+      {/* Profile header */}
+      <div className="bg-white dark:bg-gray-900 rounded-2xl p-6 shadow-sm shadow-emerald-900/5">
+        <div className="flex items-start justify-between mb-4">
+          <div className="flex items-center gap-4">
+            <Avatar name={user.username} avatarUrl={user.avatarUrl} size={16} />
+            <div>
+              <h1 className="text-lg font-semibold text-emerald-950 dark:text-gray-100">
+                {user.username}
+              </h1>
+              {user.department && (
+                <p className="text-sm text-emerald-600 dark:text-emerald-500 font-bold">
+                  {user.department}
+                </p>
               )}
             </div>
-
-            <div className="flex items-center gap-5 text-sm text-gray-600 dark:text-gray-400">
-              <span>
-                <span className="font-semibold text-gray-900 dark:text-gray-100">
-                  {postsCount}
-                </span>{" "}
-                posts
-              </span>
-              <span>
-                <span className="font-semibold text-gray-900 dark:text-gray-100">
-                  {followersCount}
-                </span>{" "}
-                followers
-              </span>
-              <span>
-                <span className="font-semibold text-gray-900 dark:text-gray-100">
-                  {followingCount}
-                </span>{" "}
-                following
-              </span>
-            </div>
           </div>
 
-          {/* Their posts */}
-          <div className=" overflow-hidden">
-            {posts.length === 0 && (
-              <p className="text-sm text-gray-400 dark:text-gray-500 text-center py-8">
-                No posts yet.
-              </p>
-            )}
-            {posts.map((post) => (
-              <PostCard
-                key={post._id || post.id}
-                post={post}
-                onChanged={fetchPosts}
-                onError={setError}
-              />
-            ))}
-          </div>
-       </AppLayout>
+          {isOwnProfile ? (
+            <button
+              onClick={() => navigate("/profile")}
+              className="text-sm border border-gray-300 rounded-lg px-4 py-1.5 text-gray-600 dark:text-gray-400"
+            >
+              Edit profile
+            </button>
+          ) : (
+            <button
+              onClick={handleFollowToggle}
+              disabled={followLoading}
+              className={`text-sm rounded-lg px-4 py-1.5 font-medium disabled:opacity-50 ${
+                isFollowing
+                  ? "border border-gray-300 text-gray-600 dark:text-gray-400"
+                  : "bg-emerald-600 text-white"
+              }`}
+            >
+              {isFollowing ? "Following" : "Follow"}
+            </button>
+          )}
+        </div>
+
+        <div className="flex items-center gap-5 text-sm text-gray-600 dark:text-gray-400">
+          <span>
+            <span className="font-semibold text-gray-900 dark:text-gray-100">
+              {postsCount}
+            </span>{" "}
+            posts
+          </span>
+          <span>
+            <span className="font-semibold text-gray-900 dark:text-gray-100">
+              {followersCount}
+            </span>{" "}
+            followers
+          </span>
+          <span>
+            <span className="font-semibold text-gray-900 dark:text-gray-100">
+              {followingCount}
+            </span>{" "}
+            following
+          </span>
+        </div>
+      </div>
+
+      {/* Their posts */}
+      <div className=" overflow-hidden">
+        {posts.length === 0 && (
+          <p className="text-sm text-gray-400 dark:text-gray-500 text-center py-8">
+            No posts yet.
+          </p>
+        )}
+        {posts.map((post) => (
+          <PostCard
+            key={post._id || post.id}
+            post={post}
+            onChanged={fetchPosts}
+            onError={setError}
+          />
+        ))}
+      </div>
+    </AppLayout>
   );
 }

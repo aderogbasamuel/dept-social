@@ -15,7 +15,7 @@ export default function ProfilePage() {
 
   return (
     <AppLayout>
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between -mt-3">
         <h1 className="text-2xl font-semibold text-emerald-950 dark:text-emerald-100">Profile</h1>
         <button onClick={handleLogout} className="text-xs text-gray-400 dark:text-gray-500 px-6">
           Log out

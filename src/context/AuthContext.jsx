@@ -15,7 +15,9 @@ export function AuthProvider({ children }) {
     const checkSession = async () => {
       try {
         const data = await request(`${API_BASE}/auth/me`);
-        setUser(data.user || data); // depends on whether your `me` wraps it in { user } or returns it raw
+        console.log("checkSession data:", data);
+        setUser(data.user || data);
+         // depends on whether your `me` wraps it in { user } or returns it raw
       } catch (err) {
         setUser(null); // no valid session — that's fine, not an error to show anyone
       } finally {
